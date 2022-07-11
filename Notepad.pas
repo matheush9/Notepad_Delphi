@@ -122,7 +122,7 @@ end;
 
 procedure TForm1.Save();
 begin
-  if (SaveDialog1.FileName = EmptyStr) then
+  if (OpenDialog1.FileName = EmptyStr) then
   begin
     SaveToDirectory();
   end;
@@ -148,8 +148,7 @@ end;
 
 procedure TForm1.NewFileCaption;
 begin
-  if SaveDialog1.FileName = EmptyStr then
-    Form1.Caption := SemTitulo + ' - ' + NotepadCaption;
+  Form1.Caption := SemTitulo + ' - ' + NotepadCaption;
 end;
 
 procedure TForm1.FileNameCaption;
