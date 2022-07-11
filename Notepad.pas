@@ -92,7 +92,8 @@ begin
   VerifyEmpty();
   SaveOption();
   NewFileCaption();
-  Memo1.Lines.Clear
+  Memo1.Lines.Clear;
+  Alterado := False;
 end;
 
 procedure TForm1.Sair1Click(Sender: TObject);
@@ -137,12 +138,17 @@ begin
 end;
 
 procedure TForm1.SaveOption();
+var
+Res: INTEGER;
 begin
   if Alterado then
   begin
-    if Application.MessageBox('Arquivo alterado, Deseja salvar?', 'Confirme',
-      MB_YESNO) = IDYES then
-      Save();
+    Res := Application.MessageBox('Arquivo alterado, Deseja salvar?', 'Confirme',
+      MB_YESNOCANCEL);
+    if Res = IDYES then
+      Save()
+    else if Res = IDCANCEL then
+      abort();
   end;
 end;
 
