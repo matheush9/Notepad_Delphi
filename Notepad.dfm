@@ -423,6 +423,7 @@ object Form1: TForm1
     6082}
   Menu = MainMenu1
   OldCreateOrder = False
+  OnCloseQuery = FormCloseQuery
   PixelsPerInch = 96
   TextHeight = 13
   object Memo1: TMemo

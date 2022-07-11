@@ -27,6 +27,7 @@ type
     procedure SobreClick(Sender: TObject);
     procedure Memo1Change(Sender: TObject);
     procedure SalvarComo1Click(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     // procedure Teste1Click(Sender: TObject);
   private
     { Private declarations }
@@ -62,6 +63,12 @@ end;
 procedure TForm1.SobreClick(Sender: TObject);
 begin
   ShowMessage('Criado por Matheus');
+end;
+
+procedure TForm1.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  SaveOption();
+  Application.Terminate;
 end;
 
 procedure TForm1.Memo1Change(Sender: TObject);
@@ -123,7 +130,6 @@ begin
       MB_YESNO) = IDYES then
       Save();
   end;
-    ShowMessage('Beleza! Perde o arquivo aí então');
 end;
 
 end.
