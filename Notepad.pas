@@ -28,6 +28,7 @@ type
     procedure Memo1Change(Sender: TObject);
     procedure SalvarComo1Click(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormActivate(Sender: TObject);
     // procedure Teste1Click(Sender: TObject);
   private
     { Private declarations }
@@ -40,29 +41,44 @@ type
     procedure SaveToDirectory();
     procedure SaveOption();
     procedure VerifyEmpty();
+    procedure NewFileCaption();
   end;
 
 var
   Form1: TForm1;
+  NotepadCaption: string = 'Bloco das Notas :)';
+  SemTitulo: string = 'Sem Título';
 
 implementation
 
 {$R *.dfm}
 
 procedure TForm1.Abrir1Click(Sender: TObject);
+var
+  FullFileName: string;
 begin
   VerifyEmpty();
   SaveOption();
   if OpenDialog1.Execute then
   begin
+    // Abre um novo arquivo e muda a caption para o nome desse arquivo.
+    Form1.Caption := EmptyStr;
     Memo1.Lines.LoadFromFile(OpenDialog1.FileName);
-    Alterado := False;
+    FullFileName := OpenDialog1.FileName;
+    FullFileName := ExtractFileName(FullFileName);
+    FullFileName := ChangeFileExt(FullFileName, '');
+    Form1.Caption := FullFileName + ' - ' + NotepadCaption;
   end;
 end;
 
 procedure TForm1.SobreClick(Sender: TObject);
 begin
   ShowMessage('Criado por Matheus');
+end;
+
+procedure TForm1.FormActivate(Sender: TObject);
+begin
+  NewFileCaption();
 end;
 
 procedure TForm1.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -80,6 +96,7 @@ procedure TForm1.Novo1Click(Sender: TObject);
 begin
   VerifyEmpty();
   SaveOption();
+  NewFileCaption();
   Memo1.Lines.Clear
 end;
 
@@ -130,6 +147,12 @@ begin
       MB_YESNO) = IDYES then
       Save();
   end;
+end;
+
+procedure TForm1.NewFileCaption;
+begin
+  if SaveDialog1.FileName = EmptyStr then
+    Form1.Caption := SemTitulo + ' - ' + NotepadCaption;
 end;
 
 end.
