@@ -42,6 +42,7 @@ type
     procedure SaveOption();
     procedure VerifyEmpty();
     procedure NewFileCaption();
+    procedure FileNameCaption();
   end;
 
 var
@@ -54,20 +55,13 @@ implementation
 {$R *.dfm}
 
 procedure TForm1.Abrir1Click(Sender: TObject);
-var
-  FullFileName: string;
 begin
   VerifyEmpty();
   SaveOption();
   if OpenDialog1.Execute then
   begin
-    // Abre um novo arquivo e muda a caption para o nome desse arquivo.
-    Form1.Caption := EmptyStr;
     Memo1.Lines.LoadFromFile(OpenDialog1.FileName);
-    FullFileName := OpenDialog1.FileName;
-    FullFileName := ExtractFileName(FullFileName);
-    FullFileName := ChangeFileExt(FullFileName, '');
-    Form1.Caption := FullFileName + ' - ' + NotepadCaption;
+    FileNameCaption();
   end;
 end;
 
@@ -137,6 +131,7 @@ procedure TForm1.SaveToDirectory();
 begin
   if SaveDialog1.Execute then
     Memo1.Lines.SaveToFile(SaveDialog1.FileName);
+  FileNameCaption();
 end;
 
 procedure TForm1.SaveOption();
@@ -153,6 +148,24 @@ procedure TForm1.NewFileCaption;
 begin
   if SaveDialog1.FileName = EmptyStr then
     Form1.Caption := SemTitulo + ' - ' + NotepadCaption;
+end;
+
+procedure TForm1.FileNameCaption;
+var
+  FullFileName: string;
+begin
+  Form1.Caption := EmptyStr;
+  if SaveDialog1.FileName = EmptyStr then
+  begin
+    FullFileName := OpenDialog1.FileName;
+  end
+  else
+  begin
+    FullFileName := SaveDialog1.FileName;
+  end;
+  FullFileName := ExtractFileName(FullFileName);
+  FullFileName := ChangeFileExt(FullFileName, '');
+  Form1.Caption := FullFileName + ' - ' + NotepadCaption;
 end;
 
 end.
