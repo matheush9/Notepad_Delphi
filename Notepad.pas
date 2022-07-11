@@ -62,6 +62,7 @@ begin
   begin
     Memo1.Lines.LoadFromFile(OpenDialog1.FileName);
     FileNameCaption();
+    Alterado := False;
   end;
 end;
 
@@ -121,7 +122,7 @@ end;
 
 procedure TForm1.Save();
 begin
-  if SaveDialog1.FileName = EmptyStr then
+  if (SaveDialog1.FileName = EmptyStr) then
   begin
     SaveToDirectory();
   end;
@@ -131,6 +132,7 @@ procedure TForm1.SaveToDirectory();
 begin
   if SaveDialog1.Execute then
     Memo1.Lines.SaveToFile(SaveDialog1.FileName);
+    Alterado := False;
   FileNameCaption();
 end;
 
